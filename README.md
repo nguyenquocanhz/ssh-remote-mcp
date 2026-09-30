@@ -90,15 +90,36 @@ Traditional SSH MCPs treat the remote server like a dumb `stdin/stdout` pipe:
 
 ---
 
-## 🚀 Installation & Configuration
+## 🚀 1-Click Universal Auto-Installer (Cài tự động cho mọi Agent IDE)
 
-### Prerequisites
-- Node.js >= 18
-- SSH Key configured on host (e.g. `~/.ssh/acer-nitro`)
+`ssh-remote-mcp` tích hợp sẵn bộ **Auto-Installer thông minh**, tự động quét và cài đặt vào **mọi Agent IDE** có trên máy tính của bạn (Claude Desktop, VS Code Native MCP, Antigravity, Cursor, Windsurf, Cline, Roo Code, Continue, Zed):
 
-### Register with Antigravity / Claude Desktop
+```bash
+# 1-Click Cài đặt tự động qua NPX (tự động nhận diện IDE và cấu hình an toàn):
+npx github:nguyenquocanhz/ssh-remote-mcp install
 
-**Cách 1: Chạy trực tiếp qua NPX từ GitHub (Khuyên dùng):**
+# Hoặc cài từ local repo:
+node dist/index.js install
+
+# Xem danh sách các IDE được phát hiện trên máy:
+npx github:nguyenquocanhz/ssh-remote-mcp list
+
+# Cài đặt ép buộc cho tất cả IDE (kể cả chưa khởi tạo config):
+npx github:nguyenquocanhz/ssh-remote-mcp install --all
+```
+
+✨ **Tính năng an toàn của Auto-Installer:**
+- **Không ghi đè dữ liệu cũ:** Giữ nguyên 100% các MCP server đang có (`zmp-mcp`, `unityMCP`,...).
+- **Tự động sao lưu:** Tạo file snapshot `.matlock.bak.<timestamp>` trước khi chỉnh sửa.
+- **Hỗ trợ đa nền tảng:** Windows, macOS, Linux.
+
+---
+
+## ⚙️ Cấu hình thủ công (Manual Configuration)
+
+Nếu bạn muốn cấu hình thủ công vào file config của IDE:
+
+**Cách 1: Chạy trực tiếp qua NPX từ GitHub:**
 ```json
 {
   "mcpServers": {

@@ -27,6 +27,8 @@ import {
   handleProfileDelete,
 } from './tools/profile.js';
 import { MatlockSessionPool } from './core/session-pool.js';
+import { McpAutoInstaller } from './installer/auto-installer.js';
+import { runInstallerCli } from './installer/cli.js';
 
 const server = new Server(
   {
@@ -226,6 +228,19 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           required: ['action'],
         },
       },
+      {
+        name: 'mcp_auto_install',
+        description: 'Automatically detect and install/configure ssh-remote-mcp (or any MCP server) into all Agent IDEs on this computer (Claude Desktop, VS Code, Cursor, Windsurf, Antigravity, Cline, Roo Code, Zed, Continue).',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            mode: { type: 'string', enum: ['local', 'npx'], description: 'Installation mode: local node script or global npx (default: local)' },
+            forceAll: { type: 'boolean', description: 'Force install into all supported IDEs even if directory does not yet exist.' },
+            targetIdeIds: { type: 'array', items: { type: 'string' }, description: 'Optional list of specific IDE IDs to target (e.g. ["claude", "vscode", "cursor", "gemini"]).' },
+            dryRun: { type: 'boolean', description: 'Preview installation without writing changes.' },
+          },
+        },
+      },
     ],
   };
 });
@@ -288,6 +303,15 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         }
         break;
 
+      case 'mcp_auto_install':
+        resultData = McpAutoInstaller.install({
+          mode: toolArgs.mode || 'local',
+          forceAll: toolArgs.forceAll === true,
+          targetIdeIds: toolArgs.targetIdeIds,
+          dryRun: toolArgs.dryRun === true,
+        });
+        break;
+
       default:
         throw new McpError(ErrorCode.MethodNotFound, `Tool not found: ${name}`);
     }
@@ -329,7 +353,14 @@ async function main() {
   await server.connect(transport);
 }
 
-main().catch((err) => {
-  console.error('Fatal MCP Server Error:', err);
-  process.exit(1);
-});
+// Check if running as installer CLI or MCP server
+const cliArgs = process.argv.slice(2);
+const installerCommands = ['install', 'setup', 'list', '--list', '-h', '--help'];
+if (cliArgs.length > 0 && installerCommands.some((cmd) => cliArgs.includes(cmd))) {
+  runInstallerCli(cliArgs);
+} else {
+  main().catch((err) => {
+    console.error('Fatal MCP Server Error:', err);
+    process.exit(1);
+  });
+}

@@ -197,6 +197,20 @@ const tools = [
       required: ['action'],
     },
   },
+  {
+    name: 'mcp_auto_install',
+    description: 'Automatically detect and install/configure ssh-remote-mcp (or any MCP server) into all Agent IDEs on this computer (Claude Desktop, VS Code, Cursor, Windsurf, Antigravity, Cline, Roo Code, Zed, Continue).',
+    parameters: {
+      $schema: 'http://json-schema.org/draft-07/schema#',
+      type: 'object',
+      properties: {
+        mode: { type: 'string', enum: ['local', 'npx'], description: 'Installation mode: local node script or global npx (default: local)' },
+        forceAll: { type: 'boolean', description: 'Force install into all supported IDEs even if directory does not yet exist.' },
+        targetIdeIds: { type: 'array', items: { type: 'string' }, description: 'Optional list of specific IDE IDs to target (e.g. ["claude", "vscode", "cursor", "gemini"]).' },
+        dryRun: { type: 'boolean', description: 'Preview installation without writing changes.' },
+      },
+    },
+  },
 ];
 
 for (const tool of tools) {
