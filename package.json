@@ -7,13 +7,24 @@
     "ssh-remote-mcp": "./dist/index.js"
   },
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nguyenquocanhz/ssh-remote-mcp.git"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
+    "prepare": "npm run build",
     "start": "node dist/index.js",
     "watch": "tsc --watch"
   },
   "keywords": [
     "mcp",
+    "model-context-protocol",
     "ssh",
     "sftp",
     "matlock",
@@ -22,8 +33,12 @@
     "automation",
     "security"
   ],
-  "author": "nqatech",
+  "author": "nguyenquocanhz <lienhe@vietcode.io.vn>",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nguyenquocanhz/ssh-remote-mcp/issues"
+  },
+  "homepage": "https://github.com/nguyenquocanhz/ssh-remote-mcp#readme",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.6.1",
     "diff": "^7.0.0",
