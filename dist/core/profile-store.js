@@ -73,6 +73,7 @@ export class MatlockProfileStore {
             port = prof.port;
             username = prof.username;
             privateKeyPath = prof.privateKeyPath;
+            password = prof.password || password;
             defaultWorkingDir = prof.defaultWorkingDir;
         }
         else if (!host) {
@@ -83,6 +84,7 @@ export class MatlockProfileStore {
                 port = homelab.port;
                 username = homelab.username;
                 privateKeyPath = homelab.privateKeyPath;
+                password = homelab.password || password;
                 defaultWorkingDir = homelab.defaultWorkingDir;
             }
         }

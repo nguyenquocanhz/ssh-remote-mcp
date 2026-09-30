@@ -75,10 +75,12 @@ Traditional SSH MCPs treat the remote server like a dumb `stdin/stdout` pipe:
 | `sftp_rollback_file` | Restores modified file from backup. | Atomic restoration from `.matlock.bak.latest` or specific backup. |
 | `sftp_list_dir` | Structured directory file explorer. | Parsed permissions, owner, size, and modification timestamps. |
 
-### 4. Profile & Credential Isolation
+### 4. Profile, Key Bootstrap & Credential Isolation
 | Tool | Description | Matlock Feature |
 | :--- | :--- | :--- |
 | `ssh_profile_manage` | Manages saved hosts in `~/.matlock/profiles.json`. | Zero raw private key transmission across MCP parameters; references credentials securely by profile name. |
+| `ssh_key_bootstrap` | 1-Click Password to Key Setup. | Tự tạo SSH key, kết nối bằng password, inject vào `authorized_keys`, xác minh và lưu profile không cần gõ pass nữa. |
+| `mcp_auto_install` | Universal Agent IDE Installer. | Cài đặt tự động `ssh-remote-mcp` vào mọi IDE (Claude, VS Code, Cursor, Windsurf...). |
 
 ---
 

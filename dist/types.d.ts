@@ -14,6 +14,7 @@ export interface HostProfile {
     port: number;
     username: string;
     privateKeyPath?: string;
+    password?: string;
     description?: string;
     defaultWorkingDir?: string;
     tags?: string[];

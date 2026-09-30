@@ -27,6 +27,7 @@ import {
   handleProfileDelete,
 } from './tools/profile.js';
 import { MatlockSessionPool } from './core/session-pool.js';
+import { handleSshKeyBootstrap } from './tools/bootstrap.js';
 import { McpAutoInstaller } from './installer/auto-installer.js';
 import { runInstallerCli } from './installer/cli.js';
 
@@ -241,6 +242,22 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           },
         },
       },
+      {
+        name: 'ssh_key_bootstrap',
+        description: '1-Click SSH Key Bootstrap: If you only have a VPS password, this tool automatically generates a local SSH key pair, connects via password, securely installs the public key into ~/.ssh/authorized_keys, verifies key-based login, and saves a named profile so you never need to use passwords again.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            host: { type: 'string', description: 'VPS IP address or domain name.' },
+            port: { type: 'number', description: 'SSH port (default: 22).' },
+            username: { type: 'string', description: 'SSH user (default: "root").' },
+            password: { type: 'string', description: 'Temporary VPS root or user password.' },
+            keyName: { type: 'string', description: 'Local key name (default: "matlock_ed25519").' },
+            profileName: { type: 'string', description: 'Name for the saved profile (e.g. "my-vps").' },
+          },
+          required: ['host', 'password'],
+        },
+      },
     ],
   };
 });
@@ -310,6 +327,10 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           targetIdeIds: toolArgs.targetIdeIds,
           dryRun: toolArgs.dryRun === true,
         });
+        break;
+
+      case 'ssh_key_bootstrap':
+        resultData = await handleSshKeyBootstrap(toolArgs);
         break;
 
       default:
