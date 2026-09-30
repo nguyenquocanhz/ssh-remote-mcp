@@ -1,0 +1,39 @@
+{
+  "name": "ssh-remote-mcp",
+  "version": "1.0.0",
+  "description": "Enterprise-grade SSH Remote MCP built on Matlock mindset: 3-tier blast radius containment, forensic assertions, safe atomic SFTP diffs, long-running task envelopes, and profile pooling.",
+  "main": "dist/index.js",
+  "bin": {
+    "ssh-remote-mcp": "./dist/index.js"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "watch": "tsc --watch"
+  },
+  "keywords": [
+    "mcp",
+    "ssh",
+    "sftp",
+    "matlock",
+    "remote",
+    "devops",
+    "automation",
+    "security"
+  ],
+  "author": "nqatech",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.1",
+    "diff": "^7.0.0",
+    "ssh2": "^1.15.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/diff": "^7.0.0",
+    "@types/node": "^22.10.1",
+    "@types/ssh2": "^1.15.4",
+    "typescript": "^5.7.2"
+  }
+}
