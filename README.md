@@ -96,15 +96,30 @@ Traditional SSH MCPs treat the remote server like a dumb `stdin/stdout` pipe:
 - Node.js >= 18
 - SSH Key configured on host (e.g. `~/.ssh/acer-nitro`)
 
-### Build
+### Register with Antigravity / Claude Desktop
+
+**Cách 1: Chạy trực tiếp qua NPX từ GitHub (Khuyên dùng):**
+```json
+{
+  "mcpServers": {
+    "ssh-remote-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "github:nguyenquocanhz/ssh-remote-mcp"
+      ]
+    }
+  }
+}
+```
+
+**Cách 2: Chạy từ source code cục bộ:**
 ```bash
 cd D:\ssh-remote-mcp
 npm install
 npm run build
 ```
-
-### Register with Antigravity / Claude Desktop
-Add to your `mcp_config.json`:
+Cấu hình trong `mcp_config.json`:
 ```json
 {
   "mcpServers": {
